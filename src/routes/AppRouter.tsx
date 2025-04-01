@@ -3,6 +3,7 @@ import Profile from '../pages/Profile.tsx'
 import Chat from '../pages/Chat.tsx'
 import History from '../pages/History.tsx'
 import MyWords from '../pages/MyWords.tsx'
+import Login from '@/pages/Login.tsx'
 
 function AppRouter() {
     return <>
@@ -11,6 +12,7 @@ function AppRouter() {
             <Route path="/history" element={<History />} />
             <Route path="/mywords" element={<MyWords />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
         </Routes>
     </>
 }
