@@ -1,41 +1,48 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import api from '../services/api'
-import { useAuth } from '../contexts/AuthContext'
+import axios from 'axios'
 
-export default function Login() {
+export default function SignUpPage() {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { setUser } = useAuth()
   const navigate = useNavigate()
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault() // chặn reload mặc định khi submit form
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault()
 
     try {
-      const res = await api.post('/login', { email, password })
-      setUser(res.data.user)         // lưu user vào context
-      navigate('/')
+      await api.post('/register', { name, email, password })
+      navigate('/login') // sau khi đăng ký → sang login
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        alert(err.response?.data?.message || 'Login failed')
+        alert(err.response?.data?.message || 'Register failed')
       } else {
-        console.error('Unknown error', err)
+        console.error('Unexpected error', err)
       }
     }
   }
 
   return (
     <form
-      onSubmit={handleLogin}
+      onSubmit={handleRegister}
       className="max-w-sm mx-auto mt-10 p-6 shadow bg-base-100 rounded"
     >
-      <h2 className="text-2xl font-bold mb-4">Log In</h2>
+      <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
+
+      <input
+        type="text"
+        placeholder="Pedro Duarte"
+        className="input input-bordered w-full mb-4"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
 
       <input
         type="email"
-        placeholder="you@example.com"
+        placeholder="you123@example.com"
         className="input input-bordered w-full mb-4"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -52,13 +59,13 @@ export default function Login() {
       />
 
       <button type="submit" className="btn btn-primary w-full">
-        Log In
+        Register
       </button>
 
       <p className="text-sm mt-4 text-center">
-        Don't have an account yet?{' '}
-        <Link to="/register" className="link link-primary">
-          Sign Up
+        Already have an account?{' '}
+        <Link to="/login" className="link link-primary">
+          Log In
         </Link>
       </p>
     </form>
