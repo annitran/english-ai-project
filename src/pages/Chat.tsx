@@ -1,12 +1,18 @@
-import { Textarea } from "@/components/ui/textarea"
+import { useAuth } from '../contexts/AuthContext'
 
-function Chat() {
-    return <>
-        <div className="flex flex-col items-center justify-start min-h-screen w-full px-4 pt-40">
-            <h1 className="text-center font-bold text-2xl mb-4">What can I help with?</h1>
-            <Textarea className="w-full max-w-3xl px-3 py-3" placeholder="Any question..."></Textarea>
-        </div>
-    </>
+export default function Chat() {
+  const { user } = useAuth()
+
+  return (
+    <div className="max-w-3xl mx-auto">
+      <h1 className="text-2xl font-bold mb-6">What can I help with?</h1>
+
+      <textarea
+        placeholder="Any question..."
+        className="textarea textarea-bordered w-full text-base"
+        rows={3}
+        disabled={!user}
+      />
+    </div>
+  )
 }
-
-export default Chat

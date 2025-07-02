@@ -1,50 +1,38 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Profile() {
+  const { user } = useAuth()
+
+  if (!user) {
+    return (
+      <div className="text-center mt-10">
+        <div role="alert" className="alert alert-vertical sm:alert-horizontal">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info h-6 w-6 shrink-0">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>Login to view your profile!</span>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>
-            Make changes to your profile here. Click save when you're done.
-          </SheetDescription>
-        </SheetHeader>
-        <div className="grid gap-4 py-4 px-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" placeholder="Pedro Duarte" className="col-span-3" />
+    <>
+      <div className="max-w-xl mx-auto mt-10 p-6 bg-base-100 shadow rounded">
+
+        <div className="space-y-4">
+          <div>
+            <p className="font-semibold">Name: {user.name}</p>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" placeholder="@peduarte" className="col-span-3" />
+          <div>
+            <p className="font-semibold">Email: {user.email}</p>
           </div>
         </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+
+        <div className="mt-6 text-right">
+          <button className="btn btn-outline">Edit Profile</button>
+        </div>
+      </div>
+    </>
   )
 }
