@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import api from '../services/api'
+import { logout } from '../services/auth'
 
 export default function Logout() {
   const navigate = useNavigate()
@@ -10,7 +10,7 @@ export default function Logout() {
   useEffect(() => {
     const doLogout = async () => {
       try {
-        await api.post('/logout')
+        await logout()
         setUser(null)
         navigate('/')
       } catch (err) {

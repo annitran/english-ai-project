@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import api from '../services/api'
+import { register } from '../services/auth'
 import axios from 'axios'
 
 export default function SignUpPage() {
@@ -13,8 +13,8 @@ export default function SignUpPage() {
     e.preventDefault()
 
     try {
-      await api.post('/register', { name, email, password })
-      navigate('/login') // sau khi đăng ký → sang login
+      await register({ name, email, password })
+      navigate('/login')
     } catch (err) {
       if (axios.isAxiosError(err)) {
         alert(err.response?.data?.message || 'Register failed')

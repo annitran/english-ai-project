@@ -1,6 +1,6 @@
 import { useAuth } from '../contexts/AuthContext'
 import { useEffect, useState } from 'react'
-import api from '../services/api'
+import { word } from '../services/auth'
 
 type Word = {
   id: number
@@ -15,7 +15,7 @@ export default function MyWords() {
   useEffect(() => {
     const fetchWords = async () => {
       try {
-        const res = await api.get('/users/words') // GET /api/v1/users/words
+        const res = await word()
         setWords(res.data.words)
       } catch (err) {
         console.error('Failed to fetch words:', err)
