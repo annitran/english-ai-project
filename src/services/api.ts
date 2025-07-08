@@ -5,4 +5,13 @@ const api = axios.create({
   withCredentials: true, // nếu bạn dùng cookie (ví dụ với JWT)
 })
 
+// Tự động gắn token vào header nếu có
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
+
 export default api
