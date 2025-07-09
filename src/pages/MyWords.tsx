@@ -1,21 +1,16 @@
 import { useAuth } from '../contexts/AuthContext'
 import { useEffect, useState } from 'react'
-import { getAllWords } from '../services/auth'
-
-type Word = {
-  id: number
-  word: string
-  meaning: string
-}
+import { wordGetList } from '../services/auth'
+import type { IWord } from '../services/auth'
 
 export default function MyWords() {
   const { user } = useAuth()
-  const [words, setWords] = useState<Word[]>([])
+  const [words, setWords] = useState<IWord[]>([])
 
   useEffect(() => {
     const fetchWords = async () => {
       try {
-        const res = await getAllWords()
+        const res = await wordGetList()
         setWords(res.data.words)
       } catch (err) {
         console.error('Failed to fetch words:', err)
@@ -24,19 +19,6 @@ export default function MyWords() {
 
     if (user) fetchWords()
   }, [user])
-
-  if (!user) {
-    return (
-      <div className="text-center mt-10">
-        <div role="alert" className="alert alert-vertical sm:alert-horizontal">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info h-6 w-6 shrink-0">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span>Login to view your word list!</span>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="overflow-x-auto">

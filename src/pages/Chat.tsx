@@ -1,22 +1,17 @@
 import { useAuth } from '../contexts/AuthContext'
 import { useState, useEffect } from 'react'
-import { getAllMess, sendMess } from '../services/auth'
-
-type Chat = {
-  id: number
-  message: string
-  is_bot?: boolean
-}
+import { chatGet, chatPost } from '../services/auth'
+import type { IChat } from '../services/auth'
 
 export default function Chat() {
   const { user } = useAuth()
-  const [messages, setMessages] = useState<Chat[]>([])
+  const [messages, setMessages] = useState<IChat[]>([])
   const [input, setInput] = useState('')
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await getAllMess()
+        const res = await chatGet()
         setMessages(res.data.messages)
       } catch (err) {
         console.error('Failed to fetch messages:', err)
@@ -30,7 +25,7 @@ export default function Chat() {
     if (!input.trim()) return
 
     try {
-      const res = await sendMess({
+      const res = await chatPost({
         message: input,
       })
       setMessages(res.data)
