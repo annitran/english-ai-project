@@ -11,6 +11,7 @@ type User = {
 export default function Profile() {
   const { id } = useParams()
   const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -19,11 +20,17 @@ export default function Profile() {
         setUser(res.data.user)
       } catch (err) {
         console.error('User not found', err)
+      } finally {
+        setLoading(false)
       }
     }
 
     if (id) fetchUser()
   }, [id])
+
+  if (loading) {
+    return <div className="text-center mt-10"></div>
+  }
 
   if (!user) {
     return <div className="alert alert-error mt-10 text-center">Cannot view this user's profile!!!</div>
