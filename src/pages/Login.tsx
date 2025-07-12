@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { login } from '../services/auth'
+import { login, getUser } from '../services/auth'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function Login() {
@@ -16,7 +16,8 @@ export default function Login() {
     try {
       const res = await login({ email, password })
       localStorage.setItem('token', res.data.token)
-      setUser(res.data.user)
+      const userRes = await getUser()
+      setUser(userRes.data.user)
       navigate('/')
     } catch (err) {
       if (axios.isAxiosError(err)) {

@@ -1,6 +1,6 @@
 import { useAuth } from '../contexts/AuthContext'
 import { useEffect, useState } from 'react'
-import { wordGetList } from '../services/auth'
+import { getAllWords } from '../services/auth'
 import type { IWord } from '../services/auth'
 
 export default function MyWords() {
@@ -10,7 +10,7 @@ export default function MyWords() {
   useEffect(() => {
     const fetchWords = async () => {
       try {
-        const res = await wordGetList()
+        const res = await getAllWords()
         setWords(res.data.words)
       } catch (err) {
         console.error('Failed to fetch words:', err)

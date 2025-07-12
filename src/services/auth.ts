@@ -12,7 +12,6 @@ interface IUserParam {
 }
 interface IUserResponse {
   token: string
-  user: IUser
 }
 
 export const login = (user: IUserParam) => {
@@ -46,10 +45,10 @@ interface IChatInput {
 interface IChatResponse {
   messages: IChat[]
 }
-export const chatGet = () => {
+export const getAllMess = () => {
   return api.get<IChatResponse>('/message')
 }
-export const chatPost = (payload: IChatInput) => {
+export const sendMess = (payload: IChatInput) => {
   return api.post<IChat[]>('/message', payload)
 }
 
@@ -62,6 +61,11 @@ export interface IWord {
 interface IWordResponse {
   words: IWord[]
 }
-export const wordGetList = () => {
+export const getAllWords = () => {
   return api.get<IWordResponse>('users/words')
+}
+
+// user
+export const getUser = () => {
+  return api.get<{ user: IUser }>('/user')
 }
