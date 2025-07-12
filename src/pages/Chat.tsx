@@ -1,16 +1,11 @@
 import { useAuth } from '../contexts/AuthContext'
 import { useState, useEffect } from 'react'
 import { getAllMess, sendMess } from '../services/auth'
-
-type Chat = {
-  id: number
-  message: string
-  is_bot?: boolean
-}
+import type { IChat } from '../services/auth'
 
 export default function Chat() {
   const { user } = useAuth()
-  const [messages, setMessages] = useState<Chat[]>([])
+  const [messages, setMessages] = useState<IChat[]>([])
   const [input, setInput] = useState('')
 
   useEffect(() => {

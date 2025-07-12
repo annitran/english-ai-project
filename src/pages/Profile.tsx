@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../services/api'
-
-type User = {
-  id: number
-  name: string
-  email: string
-}
+import type { IUser } from '../services/auth'
 
 export default function Profile() {
   const { id } = useParams()
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<IUser | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
