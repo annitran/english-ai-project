@@ -16,13 +16,13 @@ export const logout = async () => {
   return api.post('/logout')
 }
 
-export const chatGet = async () => {
+export const getAllMess = async () => {
   return api.get('message')
 }
-export const chatPost = async (payload: { message: string }) => {
+export const sendMess = async (payload: { message: string }) => {
   return api.post('message', payload)
 }
 
-export const word = async () => {
+export const getAllWords = async () => {
   return api.get('users/words')
 }
