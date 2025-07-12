@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom'
 import { Inbox, History, BookOpenText, User } from "lucide-react"
+import { useAuth } from '../contexts/AuthContext'
 
-// Menu items.
-const items = [
+function AppSidebar() {
+  const { user } = useAuth()
+  const id = user?.id
+
+  const items = [
     {
       title: "Chat",
       url: "/",
@@ -20,12 +24,10 @@ const items = [
     },
     {
       title: "Profile",
-      url: "/user",
+      url: `/user/${id}`,
       icon: User,
     },
   ]
-
-function AppSidebar() {
     return (
       <>
         <ul className="menu p-4 w-60 bg-base-200 min-h-screen">
