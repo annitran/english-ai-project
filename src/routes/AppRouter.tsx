@@ -21,7 +21,7 @@ export default function AppRouter() {
         <Route path="/" element={<Chat />} />
         <Route path="/history" element={<History />} />
         <Route path="/users/words" element={<MyWords />} />
-        <Route path="/user" element={<Profile />} />
+        <Route path="/user/:id" element={<Profile />} />
         <Route path="/logout" element={<Logout />} />
       </Route>
     </Routes>
