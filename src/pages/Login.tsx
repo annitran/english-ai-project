@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import api from '../services/api'
+import { login } from '../services/auth'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function Login() {
@@ -14,8 +14,8 @@ export default function Login() {
     e.preventDefault() // chặn reload mặc định khi submit form
 
     try {
-      const res = await api.post('/login', { email, password })
-      setUser(res.data.user)         // lưu user vào context
+      const res = await login({ email, password })
+      setUser(res.data.user)
       navigate('/')
     } catch (err) {
       if (axios.isAxiosError(err)) {
