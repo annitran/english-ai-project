@@ -1,11 +1,7 @@
 import { useAuth } from '../contexts/AuthContext'
 import { useEffect, useState } from 'react'
-import api from '../services/api'
-
-type IHistory = {
-  id: number
-  title: string
-}
+import { getAllHistories } from '../services/auth'
+import type { IHistory } from '../services/auth'
 
 export default function History() {
   const { user } = useAuth()
@@ -14,7 +10,7 @@ export default function History() {
   useEffect(() => {
     const fetchHistories = async () => {
       try {
-        const res = await api.get<{ histories: IHistory[] }>('/histories')
+        const res = await getAllHistories()
         setHistories(res.data.histories)
       } catch (err) {
         console.error('Failed to load history:', err)

@@ -71,3 +71,15 @@ export const getAllWords = () => {
 export const getUser = () => {
   return api.get<{ user: IUser }>('/user')
 }
+
+// history
+export interface IHistory {
+  id: number
+  title: string
+}
+interface IHistoryResponse {
+  histories: IHistory[]
+}
+export const getAllHistories = () => {
+  return api.get<IHistoryResponse>('/histories')
+}
