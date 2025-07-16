@@ -1,24 +1,17 @@
 import { useAuth } from '../contexts/AuthContext'
 import { useState, useEffect } from 'react'
-import { getAllMess, sendMess } from '../services/auth'
+import { sendMess } from '../services/auth'
 import type { IChat } from '../services/auth'
 
 export default function Chat() {
   const { user } = useAuth()
   const [messages, setMessages] = useState<IChat[]>([])
   const [input, setInput] = useState('')
+  const [historyId, setHistoryId] = useState<number | null>(null)
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const res = await getAllMess()
-        setMessages(res.data.messages)
-      } catch (err) {
-        console.error('Failed to fetch messages:', err)
-      }
-    }
-
-    if (user) fetchMessages()
+    setMessages([])
+    setHistoryId(null)
   }, [user])
 
   const handleSend = async () => {
@@ -27,9 +20,13 @@ export default function Chat() {
     try {
       const res = await sendMess({
         message: input,
+        history_id: historyId || 0,
       })
-      setMessages(res.data)
+      setMessages(res.data.messages)
       setInput('')
+      if (!historyId) {
+        setHistoryId(res.data.history_id) // Lưu lại ID để tiếp tục đoạn này
+      }
     } catch (err) {
       console.error('Send message failed:', err)
     }

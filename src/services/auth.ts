@@ -41,15 +41,17 @@ export interface IChat {
 }
 interface IChatInput {
   message: string
+  history_id: number
 }
 interface IChatResponse {
-  messages: IChat[]
+  messages: IChat[],
+  history_id: number
 }
 export const getAllMess = () => {
   return api.get<IChatResponse>('/message')
 }
 export const sendMess = (payload: IChatInput) => {
-  return api.post<IChat[]>('/message', payload)
+  return api.post<IChatResponse>('/message', payload)
 }
 
 // word
