@@ -57,9 +57,9 @@ function AppSidebar() {
           {histories.map((h) => (
             <li key={h.id}>
               <Link
-                to={`/chat/${h.id}`}
+                to={`/history/${h.id}`}
                 className={`block px-2 py-1 rounded hover:bg-base-300 ${
-                  location.pathname === `/chat/${h.id}` ? 'bg-base-300 font-semibold' : ''
+                  location.pathname === `/history/${h.id}` ? 'bg-base-300 font-semibold' : ''
                 }`}
               >
                 {h.title.length > 30 ? h.title.slice(0, 30) + '…' : h.title}

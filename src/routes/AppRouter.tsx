@@ -19,7 +19,7 @@ export default function AppRouter() {
       {/* Protected pages (đã login mới vào) */}
       <Route element={<AppLayout />}>
         <Route path="/" element={<Chat />} />
-        <Route path="/history" element={<History />} />
+        <Route path="/history/:id" element={<History />} />
         <Route path="/users/words" element={<MyWords />} />
         <Route path="/user/:id" element={<Profile />} />
         <Route path="/logout" element={<Logout />} />

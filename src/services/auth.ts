@@ -47,9 +47,6 @@ interface IChatResponse {
   messages: IChat[],
   history_id: number
 }
-export const getAllMess = () => {
-  return api.get<IChatResponse>('/message')
-}
 export const sendMess = (payload: IChatInput) => {
   return api.post<IChatResponse>('/message', payload)
 }
@@ -76,6 +73,7 @@ export const getUser = () => {
 export interface IHistory {
   id: number
   title: string
+  created_at: string
 }
 interface IHistoryResponse {
   histories: IHistory[]
@@ -83,3 +81,5 @@ interface IHistoryResponse {
 export const getAllHistories = () => {
   return api.get<IHistoryResponse>('/histories')
 }
+export const getMessagesByHistoryId = (historyId: number) =>
+  api.get(`/history/${historyId}`)
