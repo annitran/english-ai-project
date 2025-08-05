@@ -41,15 +41,14 @@ export interface IChat {
 }
 interface IChatInput {
   message: string
+  history_id: number
 }
 interface IChatResponse {
-  messages: IChat[]
-}
-export const getAllMess = () => {
-  return api.get<IChatResponse>('/message')
+  messages: IChat[],
+  history_id: number
 }
 export const sendMess = (payload: IChatInput) => {
-  return api.post<IChat[]>('/message', payload)
+  return api.post<IChatResponse>('/message', payload)
 }
 
 // word
@@ -69,3 +68,18 @@ export const getAllWords = () => {
 export const getUser = () => {
   return api.get<{ user: IUser }>('/user')
 }
+
+// history
+export interface IHistory {
+  id: number
+  title: string
+  created_at: string
+}
+interface IHistoryResponse {
+  histories: IHistory[]
+}
+export const getAllHistories = () => {
+  return api.get<IHistoryResponse>('/histories')
+}
+export const getMessagesByHistoryId = (historyId: number) =>
+  api.get(`/history/${historyId}`)
