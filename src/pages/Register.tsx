@@ -33,7 +33,7 @@ export default function SignUpPage() {
 
       <input
         type="text"
-        placeholder="Pedro Duarte"
+        placeholder="Name"
         className="input input-bordered w-full mb-4"
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -42,7 +42,7 @@ export default function SignUpPage() {
 
       <input
         type="email"
-        placeholder="you123@example.com"
+        placeholder="you@example.com"
         className="input input-bordered w-full mb-4"
         value={email}
         onChange={(e) => setEmail(e.target.value)}

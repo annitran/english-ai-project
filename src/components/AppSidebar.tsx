@@ -4,11 +4,7 @@ import { Inbox, BookOpenText, User } from "lucide-react"
 import { useAuth } from '../contexts/AuthContext'
 import { useEffect, useState } from 'react'
 import api from '../services/api'
-
-type IHistory = {
-  id: number
-  title: string
-}
+import type { IHistory } from '../services/auth'
 
 function AppSidebar() {
   const { user } = useAuth()
@@ -28,6 +24,10 @@ function AppSidebar() {
     }
 
     if (user) fetch()
+
+    const onRefresh = () => user && fetch()
+    window.addEventListener('history:refresh', onRefresh)
+    return () => window.removeEventListener('history:refresh', onRefresh)
   }, [user])
 
   return (
@@ -42,7 +42,7 @@ function AppSidebar() {
             </Link>
           </li>
           <li>
-            <Link to="/users/words" className="flex items-center space-x-2">
+            <Link to="/words" className="flex items-center space-x-2">
               <BookOpenText className="w-5 h-5" />
               <span>My Words</span>
             </Link>
@@ -57,9 +57,9 @@ function AppSidebar() {
           {histories.map((h) => (
             <li key={h.id}>
               <Link
-                to={`/history/${h.id}`}
+                to={`/chat/${h.id}`}
                 className={`block px-2 py-1 rounded hover:bg-base-300 ${
-                  location.pathname === `/history/${h.id}` ? 'bg-base-300 font-semibold' : ''
+                  location.pathname === `/chat/${h.id}` ? 'bg-base-300 font-semibold' : ''
                 }`}
               >
                 {h.title.length > 30 ? h.title.slice(0, 30) + '…' : h.title}
@@ -71,10 +71,14 @@ function AppSidebar() {
 
       {/* PHẦN CUỐI: Profile */}
       <div className="p-4">
-        <Link to={`/user/${id}`} className="flex items-center space-x-2">
-          <User className="w-5 h-5" />
-          <span>Profile</span>
-        </Link>
+        <ul className="space-y-2">
+          <li>
+            <Link to={`/user/${id}`} className="flex items-center space-x-2">
+              <User className="w-5 h-5" />
+              <span>Profile</span>
+            </Link>
+          </li>
+        </ul>
       </div>
     </div>
   )
