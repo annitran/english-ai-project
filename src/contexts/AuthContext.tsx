@@ -1,22 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import api from '../services/api'
-
-type User = {
-  id: number
-  name: string
-  email: string
-}
+import type { IUser } from '../services/auth'
 
 type AuthContextType = {
-  user: User | null
-  setUser: (user: User | null) => void
+  user: IUser | null
+  setUser: (user: IUser | null) => void
   loading: boolean
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<IUser | null>(null)
   const [loading, setLoading] = useState(true)
 
   // Nếu cookie đã có token thì tự lấy lại thông tin user
